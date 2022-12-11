@@ -10,7 +10,6 @@
 //
 // Make the code compile and the tests pass.
 
-// I AM NOT DONE
 
 use std::collections::HashMap;
 
@@ -30,13 +29,13 @@ fn count_for(map: &HashMap<String, Progress>, value: Progress) -> usize {
     }
     count
 }
-
+//计算values有多少通过的,map是&hashmap，也就是下面函数里的迭代器
 fn count_iterator(map: &HashMap<String, Progress>, value: Progress) -> usize {
     // map is a hashmap with String keys and Progress values.
     // map = { "variables1": Complete, "from_str": None, ... }
-    todo!();
+    map.values().filter(|x| **x == value).count()
 }
-
+//用for计算values,先遍历Vec再遍历HashMap
 fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
     let mut count = 0;
     for map in collection {
@@ -47,13 +46,13 @@ fn count_collection_for(collection: &[HashMap<String, Progress>], value: Progres
         }
     }
     count
-}
-
+}//有一个Vec里存了很多个HashMap
+//用Vec迭代器计算values
 fn count_collection_iterator(collection: &[HashMap<String, Progress>], value: Progress) -> usize {
     // collection is a slice of hashmaps.
     // collection = [{ "variables1": Complete, "from_str": None, ... },
     //     { "variables2": Complete, ... }, ... ]
-    todo!();
+    collection.iter().map(|x| count_iterator(x,value)).sum()
 }
 
 #[cfg(test)]
